@@ -10,8 +10,9 @@ import static java.lang.String.format;
 
 public class BigDecimalToBankingMoneyConverter implements BigDecimalToStringConverter {
 
-    private static final String FORMAT = "%s %s %02d/100";
-    private static final int MAXIMAL_DECIMAL_PLACES_COUNT = 2;
+    private static final String FORMAT = "%s %s %04d/10000";
+    private static final String FORMAT_NO_DECIMALS = "%s %s";
+    private static final int MAXIMAL_DECIMAL_PLACES_COUNT = 5;
 
     private final IntegerToStringConverter converter;
     private final String currencySymbol;
@@ -26,9 +27,12 @@ public class BigDecimalToBankingMoneyConverter implements BigDecimalToStringConv
         validate(value);
 
         Integer units = value.intValue();
-        Integer subunits = value.remainder(BigDecimal.ONE).multiply(new BigDecimal(100)).intValue();
+        Integer subunits = value.remainder(BigDecimal.ONE).multiply(new BigDecimal(10000)).intValue();
 
-        return format(FORMAT, converter.asWords(units), currencySymbol, subunits);
+        if (subunits > 0)
+            return format(FORMAT, converter.asWords(units), currencySymbol, subunits).trim().replaceAll("  ", " ");
+        else
+            return format(FORMAT_NO_DECIMALS, converter.asWords(units), currencySymbol, subunits).trim().replaceAll("  ", " ");
     }
 
     private void validate(BigDecimal value) {

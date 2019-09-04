@@ -25,7 +25,12 @@ class MoneyConvertersTest extends Specification {
 
     def "should convert money in GermanSpecial"() {
         expect:
-        GERMAN_SPECIAL_BANKING_MONEY_VALUE.asWords(1_234.56) == "eintausendzweihundertvierunddreißig  56/100"
+        GERMAN_SPECIAL_BANKING_MONEY_VALUE.asWords(1_234.56) == "eintausendzweihundertvierunddreißig 56/100"
+    }
+
+    def "should convert money in 2German"() {
+        expect:
+        GERMAN_SPECIAL_BANKING_MONEY_VALUE.asWords(1_234) == "eintausendzweihundertvierunddreißig"
     }
 
     def "should convert money in Russian"() {
