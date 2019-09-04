@@ -63,6 +63,22 @@ public class Container {
 
         return new Container(converter, bigDecimalBankingMoneyValueConverter);
     }
+    public static Container germanSpecialContainer() {
+
+        GermanValues values = new GermanValues();
+
+        GermanThousandToWordsConverter germanThousandToWordsConverter = new GermanThousandToWordsConverter(
+                values.baseNumbers());
+
+        IntegerToStringConverter converter = new GermanIntegerToWordsConverter(
+                new IntegerToWordsConverter(germanThousandToWordsConverter, values.pluralForms()), values.exceptions(),
+                germanThousandToWordsConverter);
+
+        BigDecimalToStringConverter bigDecimalBankingMoneyValueConverter = new BigDecimalToBankingMoneyConverter(
+                converter, "");
+
+        return new Container(converter, bigDecimalBankingMoneyValueConverter);
+    }
 
     public static Container brazilianPortugueseContainer() {
         BrazilianPortugueseValues values = new BrazilianPortugueseValues();

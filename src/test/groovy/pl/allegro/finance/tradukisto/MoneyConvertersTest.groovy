@@ -6,6 +6,7 @@ import spock.lang.Specification
 import static pl.allegro.finance.tradukisto.MoneyConverters.CZECH_BANKING_MONEY_VALUE
 import static pl.allegro.finance.tradukisto.MoneyConverters.ENGLISH_BANKING_MONEY_VALUE
 import static pl.allegro.finance.tradukisto.MoneyConverters.GERMAN_BANKING_MONEY_VALUE
+import static pl.allegro.finance.tradukisto.MoneyConverters.GERMAN_SPECIAL_BANKING_MONEY_VALUE
 import static pl.allegro.finance.tradukisto.MoneyConverters.POLISH_BANKING_MONEY_VALUE
 import static pl.allegro.finance.tradukisto.MoneyConverters.BRAZILIAN_PORTUGUESE_BANKING_MONEY_VALUE
 import static pl.allegro.finance.tradukisto.MoneyConverters.RUSSIAN_BANKING_MONEY_VALUE
@@ -20,6 +21,11 @@ class MoneyConvertersTest extends Specification {
     def "should convert money in German"() {
         expect:
         GERMAN_BANKING_MONEY_VALUE.asWords(1_234.56) == "eintausendzweihundertvierunddreißig € 56/100"
+    }
+
+    def "should convert money in GermanSpecial"() {
+        expect:
+        GERMAN_SPECIAL_BANKING_MONEY_VALUE.asWords(1_234.56) == "eintausendzweihundertvierunddreißig  56/100"
     }
 
     def "should convert money in Russian"() {
